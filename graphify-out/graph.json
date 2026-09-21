@@ -1604,7 +1604,7 @@
       "file_type": "code",
       "norm_label": "_embedding_figure()",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L611"
+      "source_location": "L621"
     },
     {
       "id": "src_dashboard_app_float_page",
@@ -1664,7 +1664,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L667"
+      "source_location": "L677"
     },
     {
       "id": "src_dashboard_app_map_figure",
@@ -5546,7 +5546,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L675",
+      "source_location": "L685",
       "weight": 1.0
     },
     {
@@ -5558,7 +5558,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L718",
+      "source_location": "L728",
       "weight": 1.0
     },
     {
@@ -5570,7 +5570,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L720",
+      "source_location": "L730",
       "weight": 1.0
     },
     {
@@ -5582,7 +5582,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L723",
+      "source_location": "L733",
       "weight": 1.0
     },
     {
@@ -5594,7 +5594,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L726",
+      "source_location": "L736",
       "weight": 1.0
     },
     {
@@ -5606,7 +5606,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L744",
+      "source_location": "L754",
       "weight": 1.0
     },
     {
@@ -11978,7 +11978,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L611",
+      "source_location": "L621",
       "weight": 1.0
     },
     {
@@ -12039,6 +12039,18 @@
       "context": "parameter_type",
       "source_file": "src/dashboard/app.py",
       "source_location": "L136",
+      "weight": 1.0
+    },
+    {
+      "source": "src_dashboard_app_skill_page",
+      "target": "src_dashboard_app_py_dataframe",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/dashboard/app.py",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -12518,7 +12530,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/dashboard/app.py",
-      "source_location": "L611",
+      "source_location": "L621",
       "weight": 1.0
     },
     {
@@ -13511,18 +13523,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/dashboard/app.py",
-      "source_location": "L611",
-      "weight": 1.0
-    },
-    {
-      "source": "src_dashboard_app",
-      "target": "src_dashboard_app_main",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/dashboard/app.py",
-      "source_location": "L667",
+      "source_location": "L621",
       "weight": 1.0
     },
     {
@@ -13534,6 +13535,17 @@
       "confidence_score": 1.0,
       "source_file": "src/dashboard/app.py",
       "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "src_dashboard_app",
+      "target": "src_dashboard_app_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/dashboard/app.py",
+      "source_location": "L677",
       "weight": 1.0
     },
     {
@@ -15588,5 +15600,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7d01f890d1f95c7ca718871c647bf9d83ada9054"
+  "built_at_commit": "c2a4f1a69cce1faf36225cc33d56b20df1d4e0a9"
 }

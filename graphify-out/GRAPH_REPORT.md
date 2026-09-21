@@ -1,17 +1,17 @@
 # Graph Report - SIH PROJECT  (2026-09-21)
 
 ## Corpus Check
-- 41 files · ~21,205 words
+- 41 files · ~21,213 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 6 file(s) not represented in the graph (top: (none) 3, .toml 1, .bat 1)
+- Unclassified: 4 file(s) not represented in the graph (top: (none) 2, .toml 1, .bat 1)
 
 ## Summary
-- 392 nodes · 940 edges · 26 communities (14 shown, 12 thin omitted)
+- 392 nodes · 941 edges · 26 communities (14 shown, 12 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7d01f890`
+- Built from commit: `c2a4f1a6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -97,7 +97,7 @@ Cohesion: 0.27
 Nodes (17): _banner(), _fail(), _is_physical_celsius(), _is_zscore(), main(), _ok(), Any, ndarray (+9 more)
 
 ### Community 7 - "app.py"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (27): cache_data, Figure, plotly_express, plotly_graph_objects, main(), evaluate_climatology(), monthly_climatology(), DataArray (+19 more)
 
 ### Community 8 - "audit_config_compliance.py"

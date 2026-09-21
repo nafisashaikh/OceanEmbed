@@ -1,0 +1,1 @@
+"""Baseline predictors for OceanEmbed."""

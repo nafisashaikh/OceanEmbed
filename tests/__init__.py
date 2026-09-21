@@ -1,0 +1,1 @@
+"""Synthetic unit tests for OceanEmbed."""

@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+data/
+outputs/
+processed_data/
+checkpoints/
+temp_out/
+*.nc
+.dodsrc
+.env
+*.log
+graphify-out/cache/

@@ -1,0 +1,17 @@
+xarray
+netCDF4
+zarr
+dask
+numpy
+pandas
+scipy
+cartopy
+matplotlib
+torch
+scikit-learn
+copernicusmarine
+earthaccess
+pyyaml
+streamlit
+plotly
+pytest

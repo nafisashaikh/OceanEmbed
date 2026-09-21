@@ -1,0 +1,167 @@
+argo:
+  input_glob: argo/*.nc
+  latitude_field: LATITUDE
+  longitude_field: LONGITUDE
+  output_validation_table: processed_data/argo_validation.csv
+  platform_field: PLATFORM_NUMBER
+  pressure_field: pres
+  random_seed: 20240918
+  temperature_field: temp
+  time_field: time
+  validation_split_ratio: 0.2
+cmems:
+  products:
+    glorys_temperature:
+      chunk_monthly: true
+      dataset_id: cmems_mod_glo_phy_my_0.083deg_P1D-m
+      output_filename: glorys_temperature.nc
+      output_subdirectory: glorys_temperature
+      use_depth: true
+      variables:
+      - thetao
+    ssh:
+      chunk_monthly: true
+      dataset_id: cmems_obs-sl_glo_phy-ssh_my_allsat-l4-duacs-0.125deg_P1D
+      output_filename: ssh.nc
+      output_subdirectory: ssh
+      use_depth: false
+      variables:
+      - sla
+    sss:
+      chunk_monthly: true
+      dataset_id: cmems_obs-mob_glo_phy-sss_my_multi_P1D
+      output_filename: sss.nc
+      output_subdirectory: sss
+      use_depth: false
+      variables:
+      - sos
+    sst:
+      chunk_monthly: true
+      dataset_id: METOFFICE-GLO-SST-L4-REP-OBS-SST
+      output_filename: sst.nc
+      output_subdirectory: sst
+      use_depth: false
+      variables:
+      - analysed_sst
+dates:
+  end: '2024-01-31T23:59:59Z'
+  start: '2022-01-01T00:00:00Z'
+depths:
+  depths_m:
+  - 0.0
+  - 5.0
+  - 10.0
+  - 20.0
+  - 30.0
+  - 50.0
+  - 75.0
+  - 100.0
+  - 125.0
+  - 150.0
+  - 200.0
+  - 300.0
+  - 500.0
+  - 700.0
+  - 1000.0
+  maximum: 1000.0
+  minimum: 0.0
+domain:
+  east: 105.0
+  north: 30.0
+  south: 5.0
+  west: 45.0
+model:
+  base_channels: 32
+  batch_size: 8
+  depth_weighting: uniform
+  depth_weights: []
+  embedding_dim: 128
+  epochs: 150
+  learning_rate: 0.001
+  random_seed: 20240918
+  use_pretrained_encoder: true
+paths:
+  cmems_output: data/raw/cmems
+  data_root: data
+  model_checkpoint_dir: checkpoints/oceanembed
+  podaac_output: data/raw/podaac
+  processed_data_dir: processed_data/oceanembed.zarr
+  raw_data_dir: data/raw
+  sanity_output: outputs/sanity
+podaac:
+  products:
+    ccmp_winds:
+      output_subdirectory: ccmp_winds
+      short_name: CCMP_WINDS_10M6HR_L4_V3.1
+      version: '3.1'
+    oscar_currents:
+      output_subdirectory: oscar_currents
+      short_name: OSCAR_L4_OC_NRT_V2.0
+      version: '2.0'
+preprocessing:
+  inputs:
+    current_u:
+      glob: podaac/oscar_currents/*.nc
+      units: m_per_s
+      variable: u
+    current_v:
+      glob: podaac/oscar_currents/*.nc
+      units: m_per_s
+      variable: v
+    ssh:
+      glob: cmems/ssh/*.nc
+      units: m
+      variable: sla
+    sss:
+      depth: minimum
+      glob: cmems/sss/*.nc
+      units: psu
+      variable: sos
+    sst:
+      glob: cmems/sst/*.nc
+      units: kelvin
+      variable: analysed_sst
+    temperature:
+      depth: minimum
+      glob: cmems/glorys_temperature/*.nc
+      units: celsius
+      variable: thetao
+    wind_u:
+      glob: podaac/ccmp_winds/*.nc
+      units: m_per_s
+      variable: uwnd
+    wind_v:
+      glob: podaac/ccmp_winds/*.nc
+      units: m_per_s
+      variable: vwnd
+  target_resolution: 0.25
+project:
+  name: OceanEmbed
+quick_test:
+  date: '2024-01-01'
+  domain:
+    east: 70.5
+    north: 10.5
+    south: 10.0
+    west: 70.0
+  output_filename: sst_one_day.png
+  product: sst
+time:
+  lag_days: 1
+  train_end: '2023-11-30T23:59:59Z'
+  val_end: '2023-12-31T23:59:59Z'
+validation:
+  depth_tolerance_m: 10
+  regions:
+    arabian_sea:
+      east: 80.0
+      north: 25.0
+      south: 0.0
+      west: 50.0
+    bay_of_bengal:
+      east: 100.0
+      north: 25.0
+      south: 5.0
+      west: 80.0
+  spatial_tolerance_deg: 0.5
+  time_tolerance_days: 1

@@ -20,13 +20,13 @@
     <div class="gl">Dashboard</div>
     <nav class="nav" id="nav">
       <a data-route="overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>Overview</a>
-      <a data-route="validation"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 3-3 3 3 5-6"/></svg>Validation &amp; skill<span class="soon">soon</span></a>
-      <a data-route="floats"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>Float explorer<span class="soon">soon</span></a>
-      <a data-route="map"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10a8 8 0 1 0-16 0c0 6 8 10 8 10Z"/><circle cx="12" cy="12" r="3"/></svg>Domain map<span class="soon">soon</span></a>
-      <a data-route="ocean3d"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>3D ocean<span class="soon">soon</span></a>
-      <a data-route="transect"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M6 6l6-4 6 4M6 12l6-4 6 4"/></svg>Depth transect<span class="soon">soon</span></a>
-      <a data-route="pipeline"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></svg>Data &amp; pipeline<span class="soon">soon</span></a>
-    </nav>
+      <a data-route="validation"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 3-3 3 3 5-6"/></svg>Validation &amp; skill</a>
+      <a data-route="floats"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>Float explorer</a>
+      <a data-route="map"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10a8 8 0 1 0-16 0c0 6 8 10 8 10Z"/><circle cx="12" cy="12" r="3"/></svg>Domain map</a>
+      <a data-route="ocean3d"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>3D ocean</a>
+      <a data-route="transect"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M6 6l6-4 6 4M6 12l6-4 6 4"/></svg>Depth transect</a>
+      <a data-route="pipeline"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></svg>Data &amp; pipeline</a>
+    <a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="streamlit" href="streamlit.html"><span class="material-symbols-outlined text-primary-fixed-dim group-hover:text-primary transition-colors">dashboard</span><div class="flex flex-col"><span class="font-title-sm text-title-sm">Streamlit App</span><span class="font-label-mono text-label-mono opacity-60 text-on-surface-variant">Embedded Dashboard</span></div></a></nav>
     <div class="foot">Reconstructs 0&ndash;1000 m temperature from satellite surface data.<br><b>Arabian Sea + Bay of Bengal</b></div>
   </aside>
 
@@ -75,7 +75,7 @@
               <div class="chart" id="map-chart" style="height:380px"></div>
             </div>
             <div class="card pad">
-              <div class="ch"><div><h3>RMSE by depth</h3><p>Model vs. climatology baseline</p></div><span class="badge2">15 / 15 win</span></div>
+              <div class="ch"><div><h3>RMSE by depth</h3><p>Model vs. climatology baseline</p></div><span class="badge2" id="ov-rmse-badge">&mdash;</span></div>
               <div class="chart" id="rmse-chart" style="height:380px"></div>
             </div>
           </div>
@@ -90,7 +90,7 @@
           <div class="grid g-3">
             <div class="story"><div class="n">The problem</div><h4>Subsurface data is scarce</h4><p>Depth-resolved ocean measurements rely on sparse, costly in-situ floats. The surface, though, is imaged daily by satellites.</p></div>
             <div class="story"><div class="n">Our approach</div><h4>Learn surface &rarr; depth</h4><p>A CNN encoder&ndash;decoder maps six surface fields (SST, SSH, SSS, winds, currents) into 15 depth levels, trained on GLORYS reanalysis.</p></div>
-            <div class="story"><div class="n">The result</div><h4>Skill at every depth</h4><p>0.83&nbsp;°C RMSE against real ARGO floats &mdash; beating the baseline at all 15 levels and within 0.1&nbsp;°C of the reanalysis ceiling.</p></div>
+            <div class="story"><div class="n">The result</div><h4>Skill at every depth</h4><p id="ov-story-result">0.87&nbsp;°C RMSE against real ARGO floats &mdash; beating the baseline at 14 of 15 depth levels, and within 0.14&nbsp;°C of the GLORYS reanalysis ceiling.</p></div>
           </div>
           <div class="honest"><b>Honest positioning:</b> the surface&rarr;subsurface approach exists in the literature. Our contribution is adapting it to the <b>Indian Ocean</b>, with strict leak-free validation against real ARGO floats and an end-to-end, deployable pipeline.</div>
           <p class="note" id="foot-note">&mdash;</p>
@@ -113,3 +113,6 @@
 <script src="assets/app.js"></script>
 </body>
 </html>
+
+
+

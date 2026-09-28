@@ -409,7 +409,7 @@ def _render_hero(summary: dict, depths: list[float]) -> None:
   </div>
 </body></html>
 """
-    components.html(html, height=290, scrolling=False)
+    st.components.v1.html(html, height=290, scrolling=False)
 
 
 # -- Data loading -------------------------------------------------------------
@@ -635,7 +635,7 @@ def _domain_map_page(predicted: xr.Dataset, depths: list[float]) -> None:
             )
 
     if view == "Animate depths (play)":
-        st.plotly_chart(map_animation_figure(predicted, date, depths), use_container_width=True)
+        st.plotly_chart(map_animation_figure(predicted, date, depths), width="stretch")
         st.caption(
             "Press **▶ Play** or drag the depth slider. One shared colour scale across all 15 levels, "
             "so the surface-to-1000 m cooling is directly comparable frame to frame."
@@ -655,9 +655,9 @@ def _domain_map_page(predicted: xr.Dataset, depths: list[float]) -> None:
         zmax = float(np.nanmax([np.nanmax(v1), np.nanmax(v2)]))
         mc1, mc2 = st.columns(2)
         with mc1:
-            st.plotly_chart(map_figure(predicted, date, depth_a, zmin=zmin, zmax=zmax), use_container_width=True)
+            st.plotly_chart(map_figure(predicted, date, depth_a, zmin=zmin, zmax=zmax), width="stretch")
         with mc2:
-            st.plotly_chart(map_figure(predicted, date, depth_b, zmin=zmin, zmax=zmax), use_container_width=True)
+            st.plotly_chart(map_figure(predicted, date, depth_b, zmin=zmin, zmax=zmax), width="stretch")
         st.caption(
             f"Both maps share one colour scale ({zmin:.1f}–{zmax:.1f} °C), so cooling with depth is "
             "directly comparable. Deeper layers are cooler and smoother — the surface signal fades downward."
@@ -681,7 +681,7 @@ def _domain_map_page(predicted: xr.Dataset, depths: list[float]) -> None:
         else:
             threshold = None
     climatology = load_climatology() if show_mhw else None
-    st.plotly_chart(map_figure(predicted, date, depth, climatology, threshold), use_container_width=True)
+    st.plotly_chart(map_figure(predicted, date, depth, climatology, threshold), width="stretch")
 
     slice_df = (
         predicted["temperature"].sel(time=np.datetime64(date), depth=depth)
@@ -723,7 +723,7 @@ def _float_page(matched: pd.DataFrame, depths: list[float]) -> None:
     )
     st.plotly_chart(
         _profile_fig(profile_long, f"Profile comparison  |  float {selected_float}  |  {selected_date}"),
-        use_container_width=True,
+        width="stretch",
     )
     st.download_button(
         "Download this float's matched records (CSV)",
@@ -776,7 +776,7 @@ def _float_page(matched: pd.DataFrame, depths: list[float]) -> None:
                     f"{selected_depth:g} m  |  {pd.Timestamp(unique_dates[0]).date()}"
                 ),
             ),
-            use_container_width=True,
+            width="stretch",
         )
         return
 
@@ -792,7 +792,7 @@ def _float_page(matched: pd.DataFrame, depths: list[float]) -> None:
         )
     st.plotly_chart(
         _series_fig(series_long, f"Time series  |  float {selected_float}  |  {selected_depth:g} m"),
-        use_container_width=True,
+        width="stretch",
     )
 
 
@@ -891,7 +891,7 @@ def _skill_page(summary: dict, depths: list[float], matched: pd.DataFrame) -> No
             height=500,
             yaxis_scaleanchor="x",
         )
-        st.plotly_chart(fig_scatter, use_container_width=True, theme="streamlit")
+        st.plotly_chart(fig_scatter, width="stretch", theme="streamlit")
     else:
         st.info("No matched ARGO records for the selected depth.")
 
@@ -950,7 +950,7 @@ def _skill_page(summary: dict, depths: list[float], matched: pd.DataFrame) -> No
             "GLORYS RMSE": "{:.3f}",
         })
     )
-    st.dataframe(styled, use_container_width=True, hide_index=True)
+    st.dataframe(styled, width="stretch", hide_index=True)
 
     # Taylor diagram (static PNG)
     st.markdown("### Taylor Diagram (interactive)")
@@ -1013,7 +1013,7 @@ def _skill_page(summary: dict, depths: list[float], matched: pd.DataFrame) -> No
         hoverlabel=dict(bgcolor="#FFFFFF", bordercolor=CLR_ACCENT,
                         font=dict(family="Inter, sans-serif", color="#0F172A")),
     )
-    st.plotly_chart(taylor_fig, use_container_width=True, theme="streamlit")
+    st.plotly_chart(taylor_fig, width="stretch", theme="streamlit")
 
     # Interactive RMSE comparison (3. unified Plotly theme)
     st.markdown("### Per-depth RMSE Comparison")
@@ -1037,7 +1037,7 @@ def _skill_page(summary: dict, depths: list[float], matched: pd.DataFrame) -> No
         hovertemplate="%{fullData.name}<br>DEPTH %{x} m  ·  RMSE %{y:.3f} °C<extra></extra>",
     )
     fig_rmse.update_layout(**_PLOTLY_BASE)
-    st.plotly_chart(fig_rmse, use_container_width=True)
+    st.plotly_chart(fig_rmse, width="stretch")
     st.download_button(
         "Download RMSE-by-depth (CSV)",
         data=rmse_df.to_csv(index=False).encode("utf-8"),
@@ -1133,7 +1133,7 @@ def _skill_page(summary: dict, depths: list[float], matched: pd.DataFrame) -> No
             "title": dict(text="DJF per-depth metrics (all test-period data)", font=dict(size=12)),
             "height": 100 + len(djf_rows) * 28,
         })
-        st.plotly_chart(fig_djf, use_container_width=True)
+        st.plotly_chart(fig_djf, width="stretch")
 
     st.divider()
 
@@ -1211,7 +1211,7 @@ def _skill_page(summary: dict, depths: list[float], matched: pd.DataFrame) -> No
                 "margin": dict(l=10, r=10, t=10, b=10),
                 "height": 100 + len(reg_rows) * 28,
             })
-            st.plotly_chart(fig_reg, use_container_width=True)
+            st.plotly_chart(fig_reg, width="stretch")
 
 
 def _volume_fig(predicted: xr.Dataset, date: str, stride: int = 2, depth_step: int = 1) -> go.Figure:
@@ -1323,7 +1323,7 @@ def _3d_page(predicted: xr.Dataset) -> None:
         "All 15 layers": (1, 1),
     }[detail]
     with st.spinner("Rendering water column…"):
-        st.plotly_chart(_volume_fig(predicted, date, stride, depth_step), use_container_width=True)
+        st.plotly_chart(_volume_fig(predicted, date, stride, depth_step), width="stretch")
     st.caption(
         "Drag to rotate · scroll to zoom · double-click to reset. "
         "Hover any sheet to read its depth and temperature. "
@@ -1591,7 +1591,7 @@ def _pipeline_page(summary: dict) -> None:
         "artifact down the line — surface observations in, a depth-resolved temperature field "
         "validated against withheld ARGO floats out.",
     )
-    components.html(_pipeline_html(n_matches, platforms), height=250, scrolling=False)
+    st.components.v1.html(_pipeline_html(n_matches, platforms), height=250, scrolling=False)
 
 
 # -- Main ---------------------------------------------------------------------
@@ -1619,7 +1619,7 @@ def _transect_page(predicted: xr.Dataset, config: dict) -> None:
                 pos = st.slider("Longitude (°E)", float(dom["west"]), float(dom["east"]),
                                 float((dom["west"] + dom["east"]) / 2), 0.25, key="tr_lon")
     st.plotly_chart(_transect_fig(predicted, date, "lat" if east_west else "lon", pos),
-                    use_container_width=True)
+                    width="stretch")
     st.caption(
         "Surface at top → 1000 m at bottom. Warm (red) surface water sits over cool (blue) deep water; "
         "a warm tongue plunging downward is the fingerprint of a subsurface marine heatwave that a "
@@ -1646,7 +1646,7 @@ def _ocean_state_page(predicted: xr.Dataset, config: dict) -> None:
                               disabled=not is_mld,
                               help="Temperature drop from the surface that marks the base of the mixed layer.")
     field, lon, lat, title, cbar = _derive_state_field(predicted, date, "mld" if is_mld else "thermo", delta)
-    st.plotly_chart(_ocean_state_fig(field, lon, lat, title, cbar), use_container_width=True)
+    st.plotly_chart(_ocean_state_fig(field, lon, lat, title, cbar), width="stretch")
 
     valid = field[~np.isnan(field)]
     if valid.size:
@@ -1825,7 +1825,7 @@ def main() -> None:
         pca_csv_path = PROJECT_ROOT / "outputs" / "embedding_pca_coords.csv"
         if pca_csv_path.exists():
             coords_df = pd.read_csv(pca_csv_path)
-            st.plotly_chart(_embedding_figure(coords_df), use_container_width=True)
+            st.plotly_chart(_embedding_figure(coords_df), width="stretch")
         else:
             st.info("Embedding PCA CSV not found in outputs directory.")
 
@@ -1843,3 +1843,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

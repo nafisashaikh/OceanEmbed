@@ -15,6 +15,7 @@ from pathlib import Path
 import numpy as np
 import xarray as xr
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -49,6 +50,17 @@ class CleanJSONResponse(JSONResponse):
 
 app = FastAPI(title="OceanEmbed API", version="1.0",
               default_response_class=CleanJSONResponse)
+
+# Allow the dashboard to reach the API even when it is opened from a different
+# local origin (e.g. the static http.server on :4599 or a file:// preview).
+# The uvicorn server on :4600 is the only process that exposes /api/*, so a
+# frontend on another port still resolves live data instead of 404-ing.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 
 
 # --------------------------------------------------------------------------- #
@@ -365,6 +377,32 @@ def inputs(date: str = Query(...)):
                 "max": round(float(finite.max()), 2),
             })
     return {"date": date, "n_channels": len(out) * (inf.LAG_DAYS + 1), "variables": out}
+
+
+@app.get("/api/embedding")
+def embedding():
+    """PCA projection of the pretrained surface embedding — real coordinates
+    exported by the training pipeline (one point per day, coloured by month;
+    held-out test days flagged). Powers the latent-space page."""
+    import pandas as pd
+    csv = ROOT / "outputs" / "embedding_pca_coords.csv"
+    if not csv.exists():
+        raise HTTPException(404, "embedding coordinates not available")
+    df = pd.read_csv(csv)
+    return {
+        "points": [
+            {
+                "date": str(r.date),
+                "month": int(r.month),
+                "pc1": round(float(r.PC1), 4),
+                "pc2": round(float(r.PC2), 4),
+                "held_out": bool(r.is_held_out),
+            }
+            for r in df.itertuples(index=False)
+        ],
+        "n": int(len(df)),
+        "held_out": int(df["is_held_out"].sum()),
+    }
 
 
 # --------------------------------------------------------------------------- #

@@ -607,16 +607,36 @@ async function initDashboard() {
 
       await new Promise(r => setTimeout(r, 1500));
 
-      const element = document.querySelector('.content');
+      try {
+        const getImage = async (id) => {
+          const el = document.getElementById(id);
+          if (!el || !el.data) return "";
+          return await Plotly.toImage(el, {format: 'jpeg', width: 900, height: 600, scale: 2});
+        };
+        
+        document.getElementById('pdf-img-skill').src = await getImage('v-rmse');
+        document.getElementById('pdf-img-float').src = await getImage('v-scatter');
+        document.getElementById('pdf-img-domain').src = await getImage('v-map');
+        document.getElementById('pdf-img-3d').src = await getImage('v-volume');
+        document.getElementById('pdf-img-transect').src = await getImage('v-transect');
+        document.getElementById('pdf-img-state').src = await getImage('v-oceanstate');
+      } catch (err) {
+        console.error("Plotly image generation error:", err);
+      }
+
+      const template = document.getElementById('pdf-report-template');
+      template.style.display = 'block';
+
       const opt = {
-        margin: [10, 10, 10, 10],
+        margin: [15, 15, 15, 15],
         filename: `OceanEmbed_Report_${STATE.currentDate || 'Live'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 1.5, useCORS: true, logging: false },
-        jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(element).save().then(() => {
+      html2pdf().set(opt).from(template).save().then(() => {
+        template.style.display = 'none';
         pages.forEach(p => p.style.display = "");
         renderCurrentPage("overview");
         btnDownload.innerHTML = originalText;

@@ -577,6 +577,55 @@ async function initDashboard() {
     });
   }
 
+  // ---- PDF Report Generation ----
+  const btnDownload = document.getElementById("btn-download-report");
+  if (btnDownload) {
+    btnDownload.addEventListener("click", async () => {
+      const originalText = btnDownload.innerHTML;
+      btnDownload.innerHTML = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Generating...`;
+      btnDownload.style.pointerEvents = "none";
+      btnDownload.style.opacity = "0.7";
+
+      const pages = document.querySelectorAll(".page");
+      pages.forEach(p => {
+        p.classList.add("show");
+        p.style.display = "block";
+      });
+
+      try {
+        await renderCurrentPage("skill-summary");
+        await renderCurrentPage("float-explorer");
+        await renderCurrentPage("domain-map");
+        await renderCurrentPage("ocean-3d");
+        await renderCurrentPage("depth-transect");
+        await renderCurrentPage("ocean-state");
+        await renderCurrentPage("data-pipeline");
+        await renderCurrentPage("embedding");
+      } catch (e) {
+        console.error("PDF Pre-render error:", e);
+      }
+
+      await new Promise(r => setTimeout(r, 1500));
+
+      const element = document.querySelector('.content');
+      const opt = {
+        margin: [10, 10, 10, 10],
+        filename: `OceanEmbed_Report_${STATE.currentDate || 'Live'}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 1.5, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        pages.forEach(p => p.style.display = "");
+        renderCurrentPage("overview");
+        btnDownload.innerHTML = originalText;
+        btnDownload.style.pointerEvents = "all";
+        btnDownload.style.opacity = "1";
+      });
+    });
+  }
+
   // ---- Initial render ----
   renderCurrentPage(window.location.hash.replace("#", "") || "overview");
 }

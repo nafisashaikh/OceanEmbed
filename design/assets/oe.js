@@ -420,11 +420,6 @@
       }],
       base({
         margin: { l: 60, r: 74, t: 10, b: 46 },
-        title: {
-          text: "Temperature section  |  " + (opts.date || "") + "  |  " + atLabel,
-          font: { family: "Inter, sans-serif", size: 13, color: C.mut },
-          x: 0, xref: "paper", pad: { l: 6 },
-        },
         xaxis: { title: { text: xtitle, standoff: 8, font: { color: C.mut } }, gridcolor: C.grid, zeroline: false, tickfont: { size: 11, color: C.mut } },
         yaxis: { title: { text: "Depth (m)", standoff: 8, font: { color: C.mut } }, autorange: "reversed", gridcolor: C.grid, tickfont: { size: 11, color: C.mut } },
       }),

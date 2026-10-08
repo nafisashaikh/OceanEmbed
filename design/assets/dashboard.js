@@ -539,6 +539,19 @@ async function initDashboard() {
     });
   }
 
+  // ---- Ocean State reset ----
+  const osReset = document.getElementById("os-reset");
+  if (osReset) {
+    osReset.addEventListener("click", () => {
+      STATE.oceanStateMode = "mld";
+      if (osMld) osMld.classList.add("on");
+      if (osTherm) osTherm.classList.remove("on");
+      const div = document.getElementById("v-oceanstate");
+      if (div && div.layout) Plotly.relayout(div, { 'xaxis.autorange': true, 'yaxis.autorange': true });
+      renderCurrentPage("ocean-state");
+    });
+  }
+
   // ---- Domain map reset ----
   const mapReset = document.getElementById("map-reset");
   if (mapReset) {

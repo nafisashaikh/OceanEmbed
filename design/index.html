@@ -332,12 +332,12 @@ h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
 .anomaly-bar{display:flex;align-items:center;gap:28px;padding:10px 16px;margin-bottom:12px;
   background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.18);border-radius:12px;flex-wrap:wrap}
 .anomaly-check{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;
-  font-size:13px;font-weight:600;color:#e2e8f0;white-space:nowrap}
+  font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap}
 .anomaly-check input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
 .anomaly-slider-wrap{display:flex;align-items:center;gap:12px;flex:1;min-width:240px;
   opacity:.35;pointer-events:none;transition:.2s var(--ease)}
 .anomaly-slider-wrap.active{opacity:1;pointer-events:all}
-.anomaly-label{font-size:12px;font-weight:600;color:#94a3b8;white-space:nowrap}
+.anomaly-label{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
 .anomaly-val{font-family:'Plus Jakarta Sans';font-weight:800;font-size:13px;
   color:var(--accent);min-width:32px;text-align:right}
 #ctrl-anomaly-thresh{flex:1;accent-color:var(--accent);cursor:pointer;height:4px}
@@ -521,7 +521,7 @@ h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
 <div class="pagehead"><h1>Ocean State</h1><p>Operational diagnostics derived per water column from the live reconstructed volume.</p></div>
 <div class="card pad">
 <div class="ch"><div><h3 id="os-title">Mixed-layer depth</h3><p id="os-sub">Shallowest depth cooler than the surface by ≥ 0.5 °C</p></div>
-<span class="tabs"><button id="os-mld" class="on">Mixed-layer depth</button><button id="os-therm">Thermocline</button></span></div>
+<span class="tabs"><button id="os-mld" class="on">Mixed-layer depth</button><button id="os-therm">Thermocline</button><button id="os-reset" class="btn ghost" style="margin-left:8px">Reset</button></span></div>
 <div id="v-oceanstate" style="height:460px;width:100%;"></div>
 </div>
 </div>

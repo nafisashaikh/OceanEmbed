@@ -8,20 +8,20 @@ This repository is an experiment pipeline. The current one-month Arabian Sea run
 
 ```mermaid
 flowchart TD
-    C[config.yaml\npaths, dates, domain, depths, model] --> D[00 Access\nCMEMS / PO.DAAC]
-    D --> R[data/raw\nNetCDF files]
-    R --> H[01 Harmonize\nregrid, daily mean, shared mask]
-    H --> S[surface Zarr\n(time, lat, lon)]
-    R --> G[GLORYS target preparation]
-    G --> T[target_temperature.zarr\n(time, depth, lat, lon)]
-    R --> A[ARGO preparation\nreal platform IDs]
-    A --> V[ARGO validation CSV\nfloat-level split]
-    S --> N[03 Splits + train-only normalization]
+    C["config.yaml<br>paths, dates, domain, depths, model"] --> D["00 Access<br>CMEMS / PO.DAAC"]
+    D --> R["data/raw<br>NetCDF files"]
+    R --> H["01 Harmonize<br>regrid, daily mean, shared mask"]
+    H --> S["surface Zarr<br>(time, lat, lon)"]
+    R --> G["GLORYS target preparation"]
+    G --> T["target_temperature.zarr<br>(time, depth, lat, lon)"]
+    R --> A["ARGO preparation<br>real platform IDs"]
+    A --> V["ARGO validation CSV<br>float-level split"]
+    S --> N["03 Splits + train-only normalization"]
     T --> N
-    N --> E[04 Embedding pretraining]
-    N --> M[05 Reconstruction training]
-    M --> P[06 Test predictions + ARGO validation]
-    P --> Q[07 Dashboard\nStreamlit display-only UI]
+    N --> E["04 Embedding pretraining"]
+    N --> M["05 Reconstruction training"]
+    M --> P["06 Test predictions + ARGO validation"]
+    P --> Q["07 Dashboard<br>Streamlit display-only UI"]
 ```
 
 ## Setup
@@ -129,4 +129,4 @@ After Phase 6:
 streamlit run src/dashboard/app.py
 ```
 
-Open http://localhost:8501.
+Open http://localhost:8501. 
